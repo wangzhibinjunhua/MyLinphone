@@ -108,7 +108,10 @@ public class LinphoneLauncherActivity extends Activity {
 
 	protected void onServiceReady() {
 		//add by wzb test
-		if(true)return;
+		if(true) {
+			//finish();
+			//return;
+		}
 		//end
 		final Class<? extends Activity> classToStart;
 		if (getResources().getBoolean(R.bool.show_tutorials_instead_of_app)) {

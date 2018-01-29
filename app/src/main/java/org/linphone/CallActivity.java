@@ -169,7 +169,9 @@ public class CallActivity extends Activity implements OnClickListener, SensorEve
 			
 			@Override
 			public void callState(LinphoneCore lc, final LinphoneCall call, LinphoneCall.State state, String message) {
+				android.util.Log.e("wzb","callactivity state:"+state.value());
 				if (LinphoneManager.getLc().getCallsNb() == 0) {
+					android.util.Log.e("wzb","callactivity 1111");
 					finish();
 					return;
 				}

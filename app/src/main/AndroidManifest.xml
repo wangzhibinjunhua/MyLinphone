@@ -189,6 +189,14 @@
             <intent-filter><action android:name="android.net.conn.CONNECTIVITY_CHANGE"></action></intent-filter>
         </receiver>
 
+        <receiver android:name="org.linphone.wzb.CoreReceiver">
+            <intent-filter>
+                <action android:name="com.custom.lp.callincoming"/>
+                <action android:name="com.custom.lp.calloutgoing"/>
+                <action android:name="com.custom.lp.gbtcifsr"/>
+            </intent-filter>
+        </receiver>
+
         <receiver android:name="org.linphone.BluetoothManager" android:enabled="false">
         </receiver>
 
