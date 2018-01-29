@@ -252,8 +252,12 @@ public class LinphoneActivity extends Activity implements OnClickListener, Conta
 			public void callState(LinphoneCore lc, LinphoneCall call, LinphoneCall.State state, String message) {
 				if (state == State.IncomingReceived) {
 					startActivity(new Intent(LinphoneActivity.instance(), CallIncomingActivity.class));
+					//add by wzb
+					//finish();
 				} else if (state == State.OutgoingInit || state == State.OutgoingProgress) {
 					startActivity(new Intent(LinphoneActivity.instance(), CallOutgoingActivity.class));
+					//add by wzb
+					//finish();
 				} else if (state == State.CallEnd || state == State.Error || state == State.CallReleased) {
 					resetClassicMenuLayoutAndGoBackToCallIfStillRunning();
 				}
@@ -622,12 +626,16 @@ public class LinphoneActivity extends Activity implements OnClickListener, Conta
 
 	public void displayAssistant() {
 		startActivity(new Intent(LinphoneActivity.this, AssistantActivity.class));
+		//add by wzb
+		//finish();
 	}
 
 
 
 	public void displayInapp() {
 		startActivity(new Intent(LinphoneActivity.this, InAppPurchaseActivity.class));
+		//add by wzb
+		//finish();
 	}
 
 	public int getUnreadMessageCount() {
@@ -969,6 +977,8 @@ public class LinphoneActivity extends Activity implements OnClickListener, Conta
 		Intent intent = new Intent(this, CallActivity.class);
 		startOrientationSensor();
 		startActivityForResult(intent, CALL_ACTIVITY);
+		//add by wzb
+		//finish();
 	}
 
 	/**
@@ -1042,6 +1052,8 @@ public class LinphoneActivity extends Activity implements OnClickListener, Conta
 			LinphoneCall call = LinphoneManager.getLc().getCalls()[0];
 			if (call.getState() == LinphoneCall.State.IncomingReceived) {
 				startActivity(new Intent(LinphoneActivity.this, CallIncomingActivity.class));
+				//add by wzb
+				//finish();
 			} else {
 				startIncallActivity(call);
 			}
@@ -1137,6 +1149,9 @@ public class LinphoneActivity extends Activity implements OnClickListener, Conta
 			Log.i("[Permission] Asking for overlay");
 			Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
 			startActivityForResult(intent, PERMISSIONS_REQUEST_OVERLAY);
+			//add by wzb
+			//finish();
+			//end
 			return false;
 		}
 		return true;
@@ -1381,14 +1396,21 @@ public class LinphoneActivity extends Activity implements OnClickListener, Conta
 
 				if (callState == State.IncomingReceived) {
 					startActivity(new Intent(this, CallIncomingActivity.class));
+					//add by wzb
+					//finish();
 				} else if (callState == State.OutgoingInit || callState == State.OutgoingProgress || callState == State.OutgoingRinging) {
 					startActivity(new Intent(this, CallOutgoingActivity.class));
+					//add by wzb
+					//finish();
 				} else {
 					startIncallActivity(call);
+					//add by wzb
+					//finish();
 				}
 			}
 		}
 		doNotGoToCallActivity = false;
+
 	}
 
 	@Override
@@ -1461,6 +1483,8 @@ public class LinphoneActivity extends Activity implements OnClickListener, Conta
 						CallActivity.instance().startIncomingCallActivity();
 					} else {
 						startActivity(new Intent(this, CallIncomingActivity.class));
+						//add by wzb
+						//finish();
 					}
 				}
 			}

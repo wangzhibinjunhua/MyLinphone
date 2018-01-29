@@ -176,7 +176,8 @@ public class LinphoneManager implements LinphoneCoreListener, LinphoneChatMessag
 		mRingbackSoundFile = basePath + "/ringback.wav";
 		mPauseSoundFile = basePath + "/hold.mkv";
 		mChatDatabaseFile = basePath + "/linphone-history.db";
-		mCallLogDatabaseFile = basePath + "/linphone-log-history.db";
+		//mCallLogDatabaseFile = basePath + "/linphone-log-history.db";
+		mCallLogDatabaseFile = "/sdcard" + "/linphone-log-history.db";
 		mFriendsDatabaseFile = basePath + "/linphone-friends.db";
 		mErrorToneFile = basePath + "/error.wav";
 		mUserCertificatePath = basePath;
@@ -475,6 +476,7 @@ public class LinphoneManager implements LinphoneCoreListener, LinphoneChatMessag
 	}
 
 	public void newOutgoingCall(String to, String displayName) {
+		android.util.Log.e("wzb","newOutgoingCall to="+to+" displayName="+displayName);
 //		if (mLc.isIncall()) {
 //			listenerDispatcher.tryingNewOutgoingCallButAlreadyInCall();
 //			return;

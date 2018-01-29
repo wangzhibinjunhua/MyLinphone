@@ -21,14 +21,17 @@ package org.linphone;
 import static android.content.Intent.ACTION_MAIN;
 
 import org.linphone.assistant.RemoteProvisioningActivity;
+import org.linphone.core.LinphoneCoreException;
 import org.linphone.mediastream.Version;
 import org.linphone.tutorials.TutorialLauncherActivity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 /**
  * 
@@ -64,7 +67,49 @@ public class LinphoneLauncherActivity extends Activity {
 		}
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		Log.e("wzb","LinphoneLauncherActivity onResume");
+		Uri uri=getIntent().getData();
+		if(uri != null){
+			String url=uri.toString();
+			Log.e("wzb","url:"+url);
+			String scheme = uri.getScheme();
+			Log.e("wzb", "scheme: " + scheme);
+			String tel_number=url.substring(4);
+			Log.e("wzb","tel_number="+tel_number);
+			callOutgoing(tel_number);
+		}
+	}
+
+	private void callOutgoing(String number) {
+		try {
+			if (!LinphoneManager.getInstance().acceptCallIfIncomingPending()) {
+				String to = String.format("sip:%s@%s", number, "120.78.138.150");
+
+				LinphoneManager.getInstance().newOutgoingCall(to, "Test Sip");
+
+				startActivity(new Intent()
+						.setClass(this, LinphoneActivity.class)
+						.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+				finish();
+			}
+		} catch (LinphoneCoreException e) {
+			LinphoneManager.getInstance().terminateCall();
+		}
+
+		try {
+
+		}catch(Exception e){
+
+		}
+	}
+
 	protected void onServiceReady() {
+		//add by wzb test
+		if(true)return;
+		//end
 		final Class<? extends Activity> classToStart;
 		if (getResources().getBoolean(R.bool.show_tutorials_instead_of_app)) {
 			classToStart = TutorialLauncherActivity.class;
@@ -85,7 +130,7 @@ public class LinphoneLauncherActivity extends Activity {
 				startActivity(new Intent().setClass(LinphoneLauncherActivity.this, classToStart).setData(getIntent().getData()));
 				finish();
 			}
-		}, 1000);
+		}, 0);
 	}
 
 	private class ServiceWaitThread extends Thread {
