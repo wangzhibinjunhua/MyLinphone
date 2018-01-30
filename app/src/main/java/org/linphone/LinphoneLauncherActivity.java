@@ -71,16 +71,6 @@ public class LinphoneLauncherActivity extends Activity {
 	protected void onResume() {
 		super.onResume();
 		Log.e("wzb","LinphoneLauncherActivity onResume");
-		Uri uri=getIntent().getData();
-		if(uri != null){
-			String url=uri.toString();
-			Log.e("wzb","url:"+url);
-			String scheme = uri.getScheme();
-			Log.e("wzb", "scheme: " + scheme);
-			String tel_number=url.substring(4);
-			Log.e("wzb","tel_number="+tel_number);
-			callOutgoing(tel_number);
-		}
 	}
 
 	private void callOutgoing(String number) {
@@ -107,12 +97,7 @@ public class LinphoneLauncherActivity extends Activity {
 	}
 
 	protected void onServiceReady() {
-		//add by wzb test
-		if(true) {
-			//finish();
-			//return;
-		}
-		//end
+
 		final Class<? extends Activity> classToStart;
 		if (getResources().getBoolean(R.bool.show_tutorials_instead_of_app)) {
 			classToStart = TutorialLauncherActivity.class;
@@ -133,7 +118,7 @@ public class LinphoneLauncherActivity extends Activity {
 				startActivity(new Intent().setClass(LinphoneLauncherActivity.this, classToStart).setData(getIntent().getData()));
 				finish();
 			}
-		}, 0);
+		}, 1000);
 	}
 
 	private class ServiceWaitThread extends Thread {

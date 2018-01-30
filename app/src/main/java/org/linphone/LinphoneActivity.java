@@ -254,15 +254,15 @@ public class LinphoneActivity extends Activity implements OnClickListener, Conta
 				android.util.Log.e("wzb","state:"+state.value());
 				if (state == State.IncomingReceived) {
 
-					//startActivity(new Intent(LinphoneActivity.instance(), CallIncomingActivity.class));
-					sendBroadcast(new Intent(CommonAction.CUSTOM_ACTION_GOTO_CALLINCOMING));
+					startActivity(new Intent(LinphoneActivity.instance(), CallIncomingActivity.class));
+					//sendBroadcast(new Intent(CommonAction.CUSTOM_ACTION_GOTO_CALLINCOMING));
 				} else if (state == State.OutgoingInit || state == State.OutgoingProgress) {
 
-					//startActivity(new Intent(LinphoneActivity.instance(), CallOutgoingActivity.class));
-					sendBroadcast(new Intent(CommonAction.CUSTOM_ACTION_GOTO_CALLOUTGOING));
+					startActivity(new Intent(LinphoneActivity.instance(), CallOutgoingActivity.class));
+					//sendBroadcast(new Intent(CommonAction.CUSTOM_ACTION_GOTO_CALLOUTGOING));
 				} else if (state == State.CallEnd || state == State.Error || state == State.CallReleased) {
-					//resetClassicMenuLayoutAndGoBackToCallIfStillRunning();
-					sendBroadcast(new Intent(CommonAction.CUSTOM_ACTION_GOTO_GoBackToCallIfStillRunning));
+					resetClassicMenuLayoutAndGoBackToCallIfStillRunning();
+					//sendBroadcast(new Intent(CommonAction.CUSTOM_ACTION_GOTO_GoBackToCallIfStillRunning));
 				}
 
 				int missedCalls = LinphoneManager.getLc().getMissedCallsCount();
@@ -292,8 +292,7 @@ public class LinphoneActivity extends Activity implements OnClickListener, Conta
 		LinphoneManager.getLc().setDeviceRotation(rotation);
 		mAlwaysChangingPhoneAngle = rotation;
 
-		//add by wzb
-		addListener(true);
+
 	}
 
 	private void initButtons() {
@@ -1140,10 +1139,10 @@ public class LinphoneActivity extends Activity implements OnClickListener, Conta
 	protected void onPause() {
 		getIntent().putExtra("PreviousActivity", 0);
 
-	/*	LinphoneCore lc = LinphoneManager.getLcIfManagerNotDestroyedOrNull();
+		LinphoneCore lc = LinphoneManager.getLcIfManagerNotDestroyedOrNull();
 		if (lc != null) {
 			lc.removeListener(mListener);
-		}*/ //del by wzb
+		}
 		callTransfer = false;
 
 		super.onPause();
@@ -1374,10 +1373,10 @@ public class LinphoneActivity extends Activity implements OnClickListener, Conta
 			startService(new Intent(Intent.ACTION_MAIN).setClass(this, LinphoneService.class));
 		}
 
-	/*	LinphoneCore lc = LinphoneManager.getLcIfManagerNotDestroyedOrNull();
+		LinphoneCore lc = LinphoneManager.getLcIfManagerNotDestroyedOrNull();
 		if (lc != null) {
 			lc.addListener(mListener);
-		}*/ //del by wzb
+		}
 
 		if (isTablet()) {
 			// Prevent fragmentContainer2 to be visible when rotating the device
@@ -1426,9 +1425,6 @@ public class LinphoneActivity extends Activity implements OnClickListener, Conta
 		}
 		doNotGoToCallActivity = false;
 
-		//add by wzb
-		moveTaskToBack(true);
-
 	}
 
 	@Override
@@ -1440,10 +1436,6 @@ public class LinphoneActivity extends Activity implements OnClickListener, Conta
 
 		instance = null;
 		super.onDestroy();
-
-		//add by wzb
-		addListener(false);
-		//end
 
 		unbindDrawables(findViewById(R.id.topLayout));
 		System.gc();
